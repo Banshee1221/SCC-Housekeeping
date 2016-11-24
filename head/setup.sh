@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# First run
+if [ -f "./deleteme" ]
+then
+  echo "Starting...."
+  sleep 3
+else
+  printf "Please go through the apps directory and ensure that all the variables"
+  printf " have been correctly set for this machines setup.\n"
+  touch deleteme
+fi
+
 ### Variables for config
 
 # This is for hosts file creation. Enter all the aliases for each. Below is an
