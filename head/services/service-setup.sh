@@ -16,3 +16,6 @@ bash configs/chrony.sh
 
 # ansible
 bash configs/ansible.sh
+
+# NFS
+bash configs/nfs.sh
