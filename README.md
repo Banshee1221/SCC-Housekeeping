@@ -32,6 +32,7 @@
 * Apps:
   * Compile apps from source and configure them
     * Torque (interactive)
+    
 ## TODO:
 
 * Make copying of ssh-keys non-interactive
