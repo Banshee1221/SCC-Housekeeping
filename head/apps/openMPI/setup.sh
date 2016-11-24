@@ -1,7 +1,19 @@
-wget https://www.open-mpi.org/software/ompi/v2.0/downloads/openmpi-2.0.1.tar.gz
-tar zxvf openmpi-2.0.1.tar.gz
-cd openmpi-2.0.1/
+#!/bin/bash
+
+# OpenMPI variables
+GLOBAL_VER="v2.0"
+OMPI_VER="2.0.1"
+OMPI_PKG="openmpi-$OMPI_VER.tar.gz"
+URL=https://www.open-mpi.org/software/ompi/$GLOBAL_VER/downloads/OMPI_PKG
+
+# Get the packages
+cd tmp
+wget $URL
+tar zxvf $OMPI_PKG
+cd $OMPI_PKG
+
+# Configure/compile/install
 ./configure --prefix=/usr/local
-make all
-sudo make install
-sudo ldconfig
+make -j $CORES all
+make install
+ldconfig
