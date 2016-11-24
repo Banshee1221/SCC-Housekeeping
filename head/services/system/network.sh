@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Flush all iptables rules
+iptables -F
+
 # Create backup directory for original NIC configs
 mkdir -p /etc/sysconfig/network-scripts/backup
 

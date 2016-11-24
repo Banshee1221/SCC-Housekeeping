@@ -1,15 +1,11 @@
 #!/bin/bash
 
-# Set up chrony
-
+# Copy chrony conf file
 cp files/chrony.conf /etc
 
+# Start the service
 systemctl enable chronyd
 systemctl start chronyd
 
+# Manually update system time
 chronyc -a makestep
-
-
-# Set up Torque Scheduler
-
-bash apps/torque.sh
