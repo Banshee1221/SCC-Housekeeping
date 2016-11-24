@@ -1,0 +1,16 @@
+sudo apt-get install nfs-kernel-server -y
+mkdir /mnt/cloud
+echo "/mnt/cloud *(rw,sync,no_root_squash,no_subtree_check)" >> /etc/exports
+exportfs -a
+sudo service nfs-kernel-server restart
+
+###############################centos7###################
+#yum install nfs-utils nfs-utils-lib
+#chkconfig nfs on 
+#service rpcbind start
+#service nfs start
+#mkdir /mnt/cloud
+#echo "/mnt/cloud *(rw,sync,no_root_squash,no_subtree_check)" >> /etc/exports
+#exportfs -a
+
+
