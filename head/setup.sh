@@ -33,7 +33,7 @@ ldconfig
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 sudo setenforce 0
 
-### Ansible hosts config
+### Set up host services
 printf "Set up the compute node scripts now, the next sections needs compute"
 printf "network configured. Waiting 10 seconds.\n"
 sleep 15

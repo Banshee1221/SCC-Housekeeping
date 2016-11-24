@@ -16,6 +16,3 @@ bash configs/chrony.sh
 
 # ansible
 bash configs/ansible.sh
-
-# Set up Torque Scheduler
-bash configs/torque.sh
