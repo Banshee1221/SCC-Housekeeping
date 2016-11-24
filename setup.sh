@@ -135,14 +135,6 @@ systemctl start chronyd
 chronyc -a makestep
 
 
-####
-#
-# Set up Torque Scheduler
-#
-####
-
-#bash apps/torque.sh
-
 printf "==========\n=\n=\n=\n=\n= Make sure that you configure the networking on the compute nodes at this point\n=\n=\n=\n=\n==========\n"
 
 read -r -p "Have you done this [y/N] " response
@@ -164,3 +156,10 @@ do
 	sudo -H -u $CLUSTER_USER bash -c "ssh-copy-id $items"
 done
 
+####
+#
+# Set up apps
+#
+####
+
+bash scripts/apps-setup.sh
