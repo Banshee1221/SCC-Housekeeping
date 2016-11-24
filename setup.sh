@@ -6,9 +6,10 @@
 #
 ####
 
-EXTERNAL_NIC=eno16777984
-INTERNAL_NIC=eno33557248
-STATIC_IP_HEAD=10.0.0.10
+EXTERNAL_NIC=eno16777984		# External network interface
+INTERNAL_NIC=eno33557248		# Internal netowkr interface
+export STATIC_IP_HEAD=10.0.0.10		# Static IP for the headnode
+export CORES=2				# Headnode cores (for building)
 
 ####
 #
@@ -28,6 +29,7 @@ STATIC_IP_HEAD=10.0.0.10
 #yum install docker chrony ansible git -y
 #yum groupinstall 'Development Tools' -y
 #iptables -F
+#ldconfig
 
 ####
 #
@@ -88,11 +90,9 @@ STATIC_IP_HEAD=10.0.0.10
 
 #systemctl restart network.service
 
-
-
 #####
 #
-# Copy all config files and restart services
+# Set up chrony
 #
 ####
 
@@ -101,3 +101,12 @@ cp files/chrony.conf /etc
 systemctl enable chronyd
 systemctl start chronyd
 
+chronyc -a makestep
+
+####
+#
+# Set up Torque Scheduler
+#
+####
+
+bash apps/torque.sh
