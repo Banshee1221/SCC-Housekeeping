@@ -11,5 +11,5 @@ INSTALL_LIST=(
 # Install initializer
 for each in ${INSTALL_LIST[@]}
 do
-  bash each/setup.sh
+  bash $each/setup.sh
 done

@@ -7,7 +7,7 @@ OMPI_PKG="openmpi-$OMPI_VER.tar.gz"
 URL=https://www.open-mpi.org/software/ompi/$GLOBAL_VER/downloads/OMPI_PKG
 
 # Get the packages
-cd tmp
+cd /tmp
 wget $URL
 tar zxvf $OMPI_PKG
 cd $OMPI_PKG
