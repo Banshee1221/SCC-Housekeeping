@@ -35,7 +35,10 @@ export INTERNAL_NIC=eno33557248		                                              #
 export STATIC_IP_HEAD=10.0.0.10		                                              # Static IP for the headnode
 export CORES=2				                                                          # Headnode cores (for building)
 export CLUSTER_USER=cluster		                                                  # Name of the shared/common user account (non-root)
-export NFS_DIR="/scratch"                                                       # Directory to export for NFS
+export NFS_DIRS=(                                                               # Directory to export for NFS
+    "/scratch"
+    "/home"
+  )                                                       
 
 ### Network configuration
 callscript "services" "system/network.sh"

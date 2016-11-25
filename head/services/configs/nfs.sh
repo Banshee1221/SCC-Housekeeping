@@ -12,7 +12,10 @@ systemctl start rpc-statd
 systemctl start nfs-idmap
 
 # Create export listing for the share
-echo "$NFS_DIR *(rw,sync,no_root_squash,no_subtree_check)" >> /etc/exports
+for each in ${NFS_DIRS[@]}
+do
+  echo "$each *(rw,sync,no_root_squash,no_subtree_check)" >> /etc/exports
+done
 
 # Export all shared FS
 exportfs -a
