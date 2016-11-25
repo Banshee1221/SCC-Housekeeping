@@ -1,5 +1,49 @@
 #!/bin/bash
 
+### Variables for config
+
+# List of node hostnames including head node, including aliases
+export NODELIST=(
+  "head.cluster" "head"
+  "node01.cluster" "node01"
+  "node02.cluster" "node02"
+  )
+
+# List of node IPs in order of above node list
+export NODE_IPS=(
+  "10.0.0.10" "10.0.0.10"
+  "10.0.0.11" "10.0.0.11"
+  "10.0.0.12" "10.0.0.12"
+  )
+  
+# List of node FQDN for script use. DON'T DUPE HOSTS
+export NODELIST_COMP=(
+  "head.cluster"
+  "node01.cluster"
+  "node02.cluster")
+
+# External network interface
+export EXTERNAL_NIC="eno16777984"
+
+# Internal netowkr interface
+export INTERNAL_NIC="eno33557248"
+
+# Static IP for the headnode
+export STATIC_IP_HEAD="10.0.0.10"
+
+# Headnode cores (for building)
+export CORES=2
+
+# Name of the shared/common user account (non-root)
+export CLUSTER_USER="cluster"
+
+# Directory to export for NFS
+export NFS_DIRS=(
+    "/scratch"
+    "/home"
+  )
+
+# Functions
 callscript () {
   cd $1
   bash $2
@@ -17,28 +61,7 @@ else
   printf " have been correctly set for this machines setup.\n"
   touch deleteme
 fi
-export ROOT=$(pwd)
 
-### Variables for config
-
-# This is for hosts file creation. Enter all the aliases for each. Below is an
-# example
-export NODELIST=("head.cluster" "head" "node01.cluster" "node01" \              # List of node hostnames including head node
-  "node02.cluster" "node02")
-export NODE_IPS=("10.0.0.10" "10.0.0.10" "10.0.0.11" "10.0.0.11" "10.0.0.12" \  # List of node IPs in order of above node list
-  "10.0.0.12")
-export NODELIST_COMP=("head.cluster" "node01.cluster" "node02.cluster")         # List of node hostnames for script use. DON'T DUPE HOSTS
-
-# Host only
-export EXTERNAL_NIC=eno16777984		                                              # External network interface
-export INTERNAL_NIC=eno33557248		                                              # Internal netowkr interface
-export STATIC_IP_HEAD=10.0.0.10		                                              # Static IP for the headnode
-export CORES=2				                                                          # Headnode cores (for building)
-export CLUSTER_USER=cluster		                                                  # Name of the shared/common user account (non-root)
-export NFS_DIRS=(                                                               # Directory to export for NFS
-    "/scratch"
-    "/home"
-  )                                                       
 
 ### Network configuration
 callscript "services" "system/network.sh"
