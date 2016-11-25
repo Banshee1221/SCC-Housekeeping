@@ -1,5 +1,12 @@
 #!/bin/bash
 
+callscript () {
+  cd $1
+  bash $2
+  cd -
+}
+export -f callscript
+
 # First run
 if [ -f "./deleteme" ]
 then
@@ -10,6 +17,7 @@ else
   printf " have been correctly set for this machines setup.\n"
   touch deleteme
 fi
+export ROOT=$(pwd)
 
 ### Variables for config
 
@@ -30,7 +38,7 @@ export CLUSTER_USER=cluster		                                                  #
 export NFS_DIR="/scratch"                                                       # Directory to export for NFS
 
 ### Network configuration
-bash services/system/network.sh
+callscript "services" "system/network.sh"
 
 ### General system prep
 yum update -y
@@ -48,7 +56,7 @@ sudo setenforce 0
 printf "Set up the compute node scripts now, the next sections needs compute"
 printf "network configured. Waiting 10 seconds.\n"
 sleep 15
-bash services/service-setup.sh
+callscript "services" "service-setup.sh"
 
 ################ NETWORK CONFIG FOR COMPUTE NODES MUST BE DONE #################
 
@@ -68,7 +76,7 @@ esac
 ################################################################################
 
 # Set up SSH
-bash services/system/ssh.sh
+callscript "services" "system/ssh.sh"
 
 ### Copy over hosts configuration to compute nodes and set correct nameserver
 ansible nodes -m copy -a "src=/etc/hosts dest=/etc/hosts"
@@ -76,4 +84,4 @@ ansible nodes -m shell -a "echo 'nameserver $STATIC_IP_HEAD' > /etc/resolv.conf"
 ansible nodes -m shell -a "chattr +i /etc/resolv.conf"
 
 # Apps install
-bash apps/app-setup.sh
+#bash apps/app-setup.sh

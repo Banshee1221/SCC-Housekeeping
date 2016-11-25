@@ -12,10 +12,10 @@ INSTALL_LIST="
 yum install -y $INSTALL_LIST
 
 # chrony
-bash configs/chrony.sh
+callscript "configs" "chrony.sh"
 
 # ansible
-bash configs/ansible.sh
+callscript "configs" "ansible.sh"
 
 # NFS
-bash configs/nfs.sh
+callscript "configs" "nfs.sh"

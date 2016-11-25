@@ -17,3 +17,4 @@ done
 
 
 # Image host commands
+#docker pull
