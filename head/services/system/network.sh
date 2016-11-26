@@ -63,10 +63,12 @@ EOT
 systemctl restart network.service
 
 # Add new hosts to the system host file
+IFS=',' read -a arr1 <<< "$NODE_IPS"
+IFS=',' read -a arr2 <<< "$NODELIST"
 VAL=0
-for items in ${NODE_IPS[@]}
+for items in ${arr1[@]}
 do
-	printf "$items\t${NODELIST[$VAL]}\n" >> /etc/hosts
+	printf "$items\t${arr2[$VAL]}\n" >> /etc/hosts
 	((VAL++))
 done
 VAL=0

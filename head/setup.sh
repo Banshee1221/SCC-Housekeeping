@@ -3,24 +3,13 @@
 ### Variables for config
 
 # List of node hostnames including head node, including aliases
-export NODELIST=(
-  "head.cluster" "head"
-  "node01.cluster" "node01"
-  "node02.cluster" "node02"
-  )
+export NODELIST="head.cluster,head,node01.cluster,node01,node02.cluster,node02"
 
 # List of node IPs in order of above node list
-export NODE_IPS=(
-  "10.0.0.10" "10.0.0.10"
-  "10.0.0.11" "10.0.0.11"
-  "10.0.0.12" "10.0.0.12"
-  )
-  
+export NODE_IPS="10.0.0.10,10.0.0.10,10.0.0.11,10.0.0.11,10.0.0.12,10.0.0.12"
+
 # List of node FQDN for script use. DON'T DUPE HOSTS
-export NODELIST_COMP=(
-  "head.cluster"
-  "node01.cluster"
-  "node02.cluster")
+export NODELIST_COMP="head.cluster,node01.cluster,node02.cluster"
 
 # External network interface
 export EXTERNAL_NIC="eno16777984"
@@ -38,10 +27,7 @@ export CORES=2
 export CLUSTER_USER="cluster"
 
 # Directory to export for NFS
-export NFS_DIRS=(
-    "/scratch"
-    "/home"
-  )
+export NFS_DIRS="/scratch,/home"
 
 # Functions
 callscript () {

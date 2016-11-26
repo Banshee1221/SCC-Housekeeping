@@ -12,7 +12,8 @@ systemctl start rpc-statd
 systemctl start nfs-idmap
 
 # Create export listing for the share
-for each in ${NFS_DIRS[@]}
+IFS=',' read -a arr <<< "$NFS_DIRS"
+for each in ${arr[@]}
 do
   echo "$each *(rw,sync,no_root_squash,no_subtree_check)" >> /etc/exports
 done
