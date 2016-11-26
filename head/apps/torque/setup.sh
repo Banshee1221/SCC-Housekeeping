@@ -38,3 +38,5 @@ systemctl start pbs_server.service
 
 # Getting the packages to the compute nodes
 make packages
+
+cd $ORIG_DIR

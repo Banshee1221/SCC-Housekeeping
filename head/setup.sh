@@ -96,4 +96,4 @@ ansible nodes -m shell -a "echo 'nameserver $STATIC_IP_HEAD' > /etc/resolv.conf"
 ansible nodes -m shell -a "chattr +i /etc/resolv.conf"
 
 # Apps install
-#bash apps/app-setup.sh
+callscript "apps" "app-setup.sh"

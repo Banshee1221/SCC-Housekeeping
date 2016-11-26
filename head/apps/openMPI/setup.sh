@@ -4,7 +4,8 @@
 GLOBAL_VER="v2.0"
 OMPI_VER="2.0.1"
 OMPI_PKG="openmpi-$OMPI_VER.tar.gz"
-URL=https://www.open-mpi.org/software/ompi/$GLOBAL_VER/downloads/OMPI_PKG
+URL=https://www.open-mpi.org/software/ompi/$GLOBAL_VER/downloads/$OMPI_PKG
+
 
 # Get the packages
 cd /tmp
@@ -17,3 +18,5 @@ cd $OMPI_PKG
 make -j $CORES all
 make install
 ldconfig
+
+cd $ORIG_DIR
