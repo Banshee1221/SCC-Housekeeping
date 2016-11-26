@@ -46,6 +46,7 @@ else
   printf "Please go through the apps directory and ensure that all the variables"
   printf " have been correctly set for this machines setup.\n"
   touch deleteme
+  exit
 fi
 
 
