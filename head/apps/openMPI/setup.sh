@@ -11,7 +11,7 @@ URL=https://www.open-mpi.org/software/ompi/$GLOBAL_VER/downloads/$OMPI_PKG.$OMPI
 # Get the packages
 cd /tmp
 wget $URL
-tar zxf $OMPI_PKG
+tar zxf $OMPI_PKG.$OMPI_EXT
 cd $OMPI_PKG
 
 # Configure/compile/install
