@@ -1,33 +1,7 @@
 #!/bin/bash
 
-### Variables for config
-
-# List of node hostnames including head node, including aliases
-export NODELIST="head.cluster,head,node01.cluster,node01,node02.cluster,node02"
-
-# List of node IPs in order of above node list
-export NODE_IPS="10.0.0.10,10.0.0.10,10.0.0.11,10.0.0.11,10.0.0.12,10.0.0.12"
-
-# List of node FQDN for script use. DON'T DUPE HOSTS
-export NODELIST_COMP="head.cluster,node01.cluster,node02.cluster"
-
-# External network interface
-export EXTERNAL_NIC="eno16777984"
-
-# Internal netowkr interface
-export INTERNAL_NIC="eno33557248"
-
-# Static IP for the headnode
-export STATIC_IP_HEAD="10.0.0.10"
-
-# Headnode cores (for building)
-export CORES=2
-
-# Name of the shared/common user account (non-root)
-export CLUSTER_USER="cluster"
-
-# Directory to export for NFS
-export NFS_DIRS="/scratch,/home"
+# Pull in config variables
+source ../vars
 
 # Functions
 callscript () {
@@ -36,6 +10,8 @@ callscript () {
   cd -
 }
 export -f callscript
+
+#: <<'END'
 
 # First run
 if [ -f "./deleteme" ]
@@ -96,5 +72,7 @@ ansible nodes -m copy -a "src=/etc/hosts dest=/etc/hosts"
 ansible nodes -m shell -a "echo 'nameserver $STATIC_IP_HEAD' > /etc/resolv.conf"
 ansible nodes -m shell -a "chattr +i /etc/resolv.conf"
 
+#END
+
 # Apps install
-callscript "apps" "app-setup.sh"
+callscript "apps" "apps-setup.sh"
