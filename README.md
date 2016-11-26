@@ -12,13 +12,18 @@
 
 * System
   * Update packages
-  * Enable EPEL
+  * Enable EPEL repo
   * Install "Development Tools"
   * Disable SELINUX
 
 * Services and config
-  * Copy configuration of chrony to /etc
-  * Create compute node list for ansible hosts /etc/ansible/hosts
+  * docker
+  * ansible
+    * Create compute node list for ansible hosts /etc/ansible/hosts
+  * chrony
+    * Copy configuration of chrony to /etc
+  * NFS
+    * Create and export listings of NFS directories
 
 * Communication
   * Generate SSH keys for root and user
@@ -32,7 +37,8 @@
 * Apps:
   * Compile apps from source and configure them
     * Torque (interactive)
-    
+    * OpenMPI
+
 ## TODO:
 
 * Make copying of ssh-keys non-interactive

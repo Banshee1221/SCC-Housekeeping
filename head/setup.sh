@@ -30,20 +30,18 @@ fi
 callscript "services" "system/network.sh"
 
 ### General system prep
-yum update -y
-yum install wget -y
+yum update -y && yum install wget -y
 cd /tmp
 rpm -i https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 cd -
-yum update -y
-yum groupinstall 'Development Tools' -y
+yum update -y && yum groupinstall 'Development Tools' -y
 ldconfig
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 sudo setenforce 0
 
 ### Set up host services
 printf "Set up the compute node scripts now, the next sections needs compute"
-printf "network configured. Waiting 10 seconds.\n"
+printf "network configured. Waiting 15 seconds.\n"
 sleep 15
 callscript "services" "service-setup.sh"
 
@@ -67,10 +65,8 @@ esac
 # Set up SSH
 callscript "services" "system/ssh.sh"
 
-### Copy over hosts configuration to compute nodes and set correct nameserver
-ansible nodes -m copy -a "src=/etc/hosts dest=/etc/hosts"
-ansible nodes -m shell -a "echo 'nameserver $STATIC_IP_HEAD' > /etc/resolv.conf"
-ansible nodes -m shell -a "chattr +i /etc/resolv.conf"
+# Call all post scripts (these generally rely on network to be configured)
+callscript "post" "post-setup.sh"
 
 #END
 
