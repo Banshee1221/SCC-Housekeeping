@@ -66,9 +66,7 @@ esac
 callscript "services" "system/ssh.sh"
 
 # Call all post scripts (these generally rely on network to be configured)
-callscript "post" "post-setup.sh"
+cd ansible
+ansible-playbook site.yml
 
 #END
-
-# Apps install
-callscript "apps" "apps-setup.sh"

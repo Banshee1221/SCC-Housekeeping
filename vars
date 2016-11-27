@@ -36,3 +36,9 @@ export NFS_DIRS="/scratch,/home"
 #   COMPUTE NODE CONFIG VARIABLES   #
 #                                   #
 #####################################
+
+export COMP_INTERNAL_NIC=eno16777984
+
+export STATIC_IP_COMP=10.0.0.11
+
+export COMP_CORES=2

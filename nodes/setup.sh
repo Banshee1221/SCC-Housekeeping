@@ -1,4 +1,16 @@
 #!/bin/bash
 
-sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
-sudo setenforce 0
+# Pull in config variables
+source ../vars
+
+# Functions
+callscript () {
+  cd $1
+  bash $2
+  cd -
+}
+export -f callscript
+
+callscript "services/system" "selinux.sh"
+
+callscript "services/system" "network.sh"
