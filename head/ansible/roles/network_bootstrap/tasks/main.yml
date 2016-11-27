@@ -2,8 +2,11 @@
 - name: Copy the headnode's hosts file to the compute nodes
   copy: src=/etc/hosts dest=/etc/hosts backup=yes
 
+- name: Remove existing entries from compute nodes /etc/resolv.conf
+  shell: printf "" > /etc/resolv.conf
+
 - name: Set the nameserver of the compute nodes to the IP of the headnode
-  lineinfile: dest=/etc/resolv.conf line="nameserver {{ head_internal_ip }}"
+  lineinfile: dest=/etc/resolv.conf line="nameserver 8.8.8.8"
 
 - name: Set the /etc/resolv.conf file of the compute nodes as immutable
   shell: chattr +i /etc/resolv.conf
