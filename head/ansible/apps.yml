@@ -1,0 +1,5 @@
+---
+- hosts: compute_nodes
+  user: root
+  roles:
+    - torque_compute

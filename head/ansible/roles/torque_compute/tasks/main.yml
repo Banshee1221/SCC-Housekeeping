@@ -1,0 +1,28 @@
+---
+- name: Install packages requried for NFS client
+  yum: name={{ item }} state=present update_cache=yes
+  with_items:
+    - nfs-utils
+    - libnfsidmap
+
+- name: Enable the necessary services
+  systemd:
+    name: rpcbind
+    enabled: yes
+    masked: no
+
+- name: Start the necessary services
+  systemd:
+    name: rpcbind
+    state: started
+
+- name: Create the directories on the compute nodes to mirror the head
+  file: path="{{ item }}" state=directory
+  with_items: "{{ nfs_mounts }}"
+
+- name: Add nfs shares to the FSTAB of the compute nodes
+  lineinfile: dest=/etc/fstab line="{{ head_internal_ip }}:{{ item }} {{ item }} nfs rw,sync,hard,intr 0 0"
+  with_items: "{{ nfs_mounts }}"
+
+- name: Mount the new directories on the compute nodes
+  shell: mount -a
