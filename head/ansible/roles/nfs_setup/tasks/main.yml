@@ -1,0 +1,21 @@
+---
+- name: Install packages requried for NFS client
+  yum: name={{ item }} state=present update_cache=yes
+  with_items:
+    - nfs-utils
+    - libnfsidmap
+
+- name: Enable the necessary services
+  systemd:
+    name: rpcbind
+    enabled: yes
+    masked: no
+
+- name: Start the necessary services
+  systemd:
+    name: rpcbind
+    state: started
+
+
+#- name: Copy the headnode's hosts file to the compute nodes
+#  copy: src=/etc/hosts dest=/etc/hosts backup=yes

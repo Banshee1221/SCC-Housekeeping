@@ -6,7 +6,8 @@
   shell: printf "" > /etc/resolv.conf
 
 - name: Set the nameserver of the compute nodes to the IP of the headnode
-  lineinfile: dest=/etc/resolv.conf line="nameserver 8.8.8.8"
+  lineinfile: dest=/etc/resolv.conf line="nameserver {{ item }}"
+  with_items: "{{ compute_nameservers }}"
 
 - name: Set the /etc/resolv.conf file of the compute nodes as immutable
   shell: chattr +i /etc/resolv.conf
