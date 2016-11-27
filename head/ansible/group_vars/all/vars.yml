@@ -1,4 +1,2 @@
 ---
-- hosts: compute_nodes
-  vars:
-    head_internal_ip: 10.0.0.10
+head_internal_ip: 10.0.0.10
