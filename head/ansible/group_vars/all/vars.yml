@@ -5,3 +5,5 @@ compute_nameservers:
   - 192.102.9.66
 #  - 8.8.8.8
 #  - 8.8.4.4
+nfs_mounts:
+  - /scratch

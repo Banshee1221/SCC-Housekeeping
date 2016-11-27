@@ -16,6 +16,10 @@
     name: rpcbind
     state: started
 
+- name: Create the directories on the compute nodes to mirror the head
+  file: path="{{ item }}" state=directory
 
-#- name: Copy the headnode's hosts file to the compute nodes
-#  copy: src=/etc/hosts dest=/etc/hosts backup=yes
+  with_items: "{{ nfs_mounts }}"
+- name: Add nfs shares to the FSTAB of the compute nodes
+  lineinfile: dest=/etc/fstab line="{{ head_internal_ip }}:{{ item }} {{ item }} nfs rw,sync,hard,intr 0 0"
+  with_items: "{{ nfs_mounts }}"
