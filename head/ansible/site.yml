@@ -2,5 +2,4 @@
 - hosts: compute_nodes
   user: root
   roles:
-    network_bootstrap
-    
+    - network_bootstrap
