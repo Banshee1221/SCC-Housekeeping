@@ -28,13 +28,20 @@ printf "%s\n" "${TORQUE_NODES[@]}" > /var/spool/torque/server_priv/nodes
 
 # Install and start the remaining configs
 cp contrib/systemd/trqauthd.service /usr/lib/systemd/system/
+cp contrib/systemd/pbs_server.service /usr/lib/systemd/system/
+cp contrib/systemd/pbs_sched.service /usr/lib/systemd/system/
+
 systemctl enable trqauthd.service
+systemctl enable pbs_server.service
+systemctl enable pbs_sched
+
 systemctl start trqauthd.service
+
 ./torque.setup root
 /usr/local/bin/qterm
-cp contrib/systemd/pbs_server.service /usr/lib/systemd/system/
-systemctl enable pbs_server.service
+
 systemctl start pbs_server.service
+systemctl start pbs_sched
 
 # Getting the packages to the compute nodes
 make packages

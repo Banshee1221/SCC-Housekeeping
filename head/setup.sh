@@ -67,10 +67,15 @@ callscript "services" "system/ssh.sh"
 
 # Call all post scripts (these generally rely on network to be configured)
 cd ansible
-ansible-playboot site.yml
+ansible-playbook site.yml
 cd -
 
-# Apps install
+# Apps local install
 callscript "apps" "apps-setup.sh"
+
+# Apps for network
+cd ansible
+ansible-playbook apps.yml
+cd -
 
 #END

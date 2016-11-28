@@ -41,4 +41,4 @@ export COMP_INTERNAL_NIC=eno16777984
 
 export STATIC_IP_COMP=10.0.0.11
 
-export COMP_CORES=2
+export COMP_CORES=4
