@@ -1,10 +1,8 @@
-torqe_nodelist:
-  - node01.cluster
-  - node02.cluster
-
-torque_nodelist_cpus:
-  - "4"
-  - "4"
+torque_nodelist:
+  node01.cluster:
+    cpus: 4
+  node02.cluster:
+    cpus: 4
 
 torque_compile_dir: /tmp/torque
 

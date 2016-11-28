@@ -25,16 +25,16 @@
     - make install
 
 - name: Add configs for server_name and lib path
-  command: {{ item }}
+  shell: "{{ item }}"
   with_items:
     - touch /var/spool/torque/server_name
-    - echo "{{ ansible_hostname }}" > /var/spool/torque/server_name
+    - echo "{{ ansible_fqdn }}" > /var/spool/torque/server_name
     - echo "/usr/local/lib" > /etc/ld.so.conf.d/torque.conf
     - ldconfig
     - touch /var/spool/torque/server_priv/nodes
 
 - name: Add list of nodes to server_priv
-  lineinfile: dest=/var/spool/torque/server_priv/nodes line="{{ item }}"
+  lineinfile: dest=/var/spool/torque/server_priv/nodes line="{{ item.key }} np={{ item.value.cpus }}"
   with_items: "{{ torque_nodelist }}"
 
 - name: Copy the systemd services for the headnode
@@ -45,7 +45,7 @@
     - pbs_sched.service
 
 - name: Enable the services
-  command: "systemctl enable {{ item }}"
+  shell: "systemctl enable {{ item }}"
   with_items:
     - trqauthd.service
     - pbs_server.service
@@ -57,11 +57,11 @@
 - name: Generate the torque database
   expect:
     command: "{{ torque_compile_dir }}/toqrue.setup root"
-      responses:
-        (?i)y/(n)? "y"
+    responses:
+      (?i)y/(n)? "y"
 
 - name: Restart the services and make the packages to send to the compute nodes
-  command: "{{ item }}"
+  shell: "{{ item }}"
   with_items:
     - /usr/local/bin/qterm
     - systemctl restart pbs_server.service
@@ -74,7 +74,7 @@
     - include: computenode.yml
 
 - name: Restart the torque services on the headnode
-  command: "systemctl restart {{ item }}"
+  shell: "systemctl restart {{ item }}"
   with_items:
     - trqauthd.service
     - pbs_server.service
