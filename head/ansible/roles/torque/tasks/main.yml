@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  tasks:
+    - include: headnode.yml
+
+#- hosts: compute_nodes
+#  tasks:
+#  - include: computenode.yml

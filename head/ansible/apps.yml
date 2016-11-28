@@ -1,5 +1,6 @@
 ---
-- hosts: compute_nodes
-  user: root
+- user: root
   roles:
-    - torque_compute
+    #- chrony
+    - torque
+    #- ganglia

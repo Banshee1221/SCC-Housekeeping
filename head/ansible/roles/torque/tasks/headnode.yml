@@ -1,0 +1,70 @@
+---
+- name: Install libraries necessary to compile Torque
+  yum: name={{ item }} state=present
+  with_items:
+    - openssl-devel
+    - boost-devel
+    - libxml2-devel
+
+- name: Clear out the build directory if it exists
+  command: rm -rf {{ torque_compile_dir }}
+
+- name: Grab Torque source from github
+  git:
+    repo: https://github.com/adaptivecomputing/torque.git
+    dest: {{ torque_compile_dir }}
+    version: master
+
+- name: Autogen, configure, make and install
+  command: "chdir={{ torque_compile_dir }} {{ item }}"
+  with_items:
+    - ./autogen.sh
+    - ./configure
+    - make -j {{ headnode_cores }}
+    - libtool --finish /usr/local/lib
+    - make install
+
+- name: Add configs for server_name and lib path
+  command: {{ item }}
+  with_items:
+    - touch /var/spool/torque/server_name
+    - echo "{{ ansible_hostname }}" > /var/spool/torque/server_name
+    - echo "/usr/local/lib" > /etc/ld.so.conf.d/torque.conf
+    - ldconfig
+    - touch /var/spool/torque/server_priv/nodes
+
+- name: Add list of nodes to server_priv
+  lineinfile: dest=/var/spool/torque/server_priv/nodes line="{{ item }}"
+  with_items: "{{ torque_nodelist }}"
+
+- name: Copy the systemd services for the headnode
+  copy: src={{ torque_compile_dir }}/contrib/systemd/{{ item }} dest=/usr/lib/systemd/system/{{ item }}
+  with_items:
+    - trqauthd.service
+    - pbs_server.service
+    - pbs_sched.service
+
+- name: Enable the services
+  command: "systemctl enable {{ item }}"
+  with_items:
+    - trqauthd.service
+    - pbs_server.service
+    - pbs_sched.service
+
+- name: Start trqauthd to do the database setup
+  systemd: name=trqauthd.service state=started
+
+- name: Generate the torque database
+  expect:
+    command: "{{ torque_compile_dir }}/toqrue.setup root"
+      responses:
+        (?i)y/(n)? "y"
+
+- name: Restart the services and make the packages to send to the compute nodes
+  command: "{{ item }}"
+  with_items:
+    - /usr/local/bin/qterm
+    - systemctl restart pbs_server.service
+    - systemctl restart pbs_sched
+    - systemctl restart trqauthd
+    - make packages

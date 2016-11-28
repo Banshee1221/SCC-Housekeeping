@@ -71,10 +71,7 @@ cd ansible
 ansible-playbook site.yml
 cd -
 
-# Apps local install
-callscript "apps" "apps-setup.sh"
-
-# Apps for network
+# Apps install
 cd ansible
 ansible-playbook apps.yml
 cd -

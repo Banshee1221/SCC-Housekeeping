@@ -24,16 +24,3 @@
     name: pbs_mom
     enabled: yes
     state: started
-
-- name: Restart the pbs_mom service on the head nodes
-  local_action:
-    systemd state=restarted name=pbs_mom
-- name: Restart the pbs_sched service on the head node
-  local_action:
-    systemd state=restarted name=pbs_sched
-- name: Restart the pbs_server service on the head node
-  local_action:
-    systemd state=restarted name=pbs_server
-- name: Restart the trqauthd service on the head node
-  local_action:
-    systemd state=restarted name=trqauthd
