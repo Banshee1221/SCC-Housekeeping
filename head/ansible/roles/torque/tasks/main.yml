@@ -56,12 +56,13 @@
 
 - name: Generate the torque database
   expect:
-    command: "{{ torque_compile_dir }}/toqrue.setup root"
+    command: "{{ torque_compile_dir }}/torque.setup root"
     responses:
-      (?i)y/(n)? "y"
+      do you wish to continue y\/\(n\)?: y
+
 
 - name: Restart the services and make the packages to send to the compute nodes
-  shell: "{{ item }}"
+  shell: "chdir={{ torque_compile_dir}} {{ item }}"
   with_items:
     - /usr/local/bin/qterm
     - systemctl restart pbs_server.service

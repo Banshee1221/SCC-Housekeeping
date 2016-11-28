@@ -1,6 +1,6 @@
 ---
 - hosts: localhost
-- user: root
+  user: root
   roles:
     #- chrony
     - torque
