@@ -1,14 +1,14 @@
 ---
 - name: Copy over torque child services
   copy: src={{ torque_compile_dir }}/{{ item }} dest=/tmp/
-  with_items: {{ torque_client_packages }}
+  with_items: "{{ torque_client_packages }}"
 
 - name: Copy over the systemd services
   copy: src={{ torque_compile_dir }}/contrib/systemd/pbs_mom.service dest=/usr/lib/systemd/system/
 
 - name: Install the services on the compute nodes
   shell: sh /tmp/{{ item }} --install
-  with_items: {{ torque_client_packages }}
+  with_items: "{{ torque_client_packages }}"
 
 - name: Copy the library config to the compute nodes
   copy: src=/etc/ld.so.conf.d/torque.conf dest=/etc/ld.so.conf.d/
