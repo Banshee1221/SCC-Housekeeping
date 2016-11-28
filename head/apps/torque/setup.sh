@@ -24,7 +24,8 @@ make install
 echo $HOSTNAME > /var/spool/torque/server_name
 echo "/usr/local/lib" > /etc/ld.so.conf.d/torque.conf
 ldconfig
-printf "%s\n" "${TORQUE_NODES[@]}" > /var/spool/torque/server_priv/nodes
+touch /var/spool/torque/server_priv/nodes
+printf "%s\n" "${TORQUE_NODES[@]}" >> /var/spool/torque/server_priv/nodes
 
 # Install and start the remaining configs
 cp contrib/systemd/trqauthd.service /usr/lib/systemd/system/

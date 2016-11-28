@@ -1,0 +1,4 @@
+torque_compile_dir: /tmp/torque
+torque_client_packages:
+  - torque-package-mom-linux-x86_64.sh
+  - torque-package-clients-linux-x86_64.sh

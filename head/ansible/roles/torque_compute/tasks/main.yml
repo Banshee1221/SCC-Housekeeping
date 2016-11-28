@@ -1,18 +1,14 @@
 ---
-- client_packages:
-    - torque-package-mom-linux-x86_64.sh
-    - torque-package-clients-linux-x86_64.sh
-
 - name: Copy over torque child services
   copy: src={{ torque_compile_dir }}/{{ item }} dest=/tmp/
-  with_items: {{ client_packages }}
+  with_items: {{ torque_client_packages }}
 
 - name: Copy over the systemd services
   copy: src={{ torque_compile_dir }}/contrib/systemd/pbs_mom.service dest=/usr/lib/systemd/system/
 
 - name: Install the services on the compute nodes
-  shell: /tmp/{{ item }}
-  with_items: {{ client_packages }}
+  shell: sh /tmp/{{ item }} --install
+  with_items: {{ torque_client_packages }}
 
 - name: Copy the library config to the compute nodes
   copy: src=/etc/ld.so.conf.d/torque.conf dest=/etc/ld.so.conf.d/
@@ -23,13 +19,25 @@
 - name: Set compute nodes to use head node as server_name
   shell: echo "{{ head_fqdn }}" > /var/spool/torque/server_name
 
-- name: Enable the PBS_MOM service
+- name: Enable and start the PBS_MOM service
   systemd:
     name: pbs_mom
     enabled: yes
-    masked: no
-
-- name: Start the PBS_MOM service
-  systemd:
-    name: pbs_mom
     state: started
+
+- name: Restart the host services for torque
+  hosts: 127.0.0.1
+  connection: local
+  tasks:
+    - systemd:
+        name: pbs_mom
+        state: restarted
+      systemd:
+        name: pbs_sched
+        state: restarted
+      systemd:
+        name: pbs_server
+        state: restarted
+      systemd:
+        name: trqauthd
+        state: restarted
