@@ -37,7 +37,7 @@ export NFS_DIRS="/scratch,/home"
 #                                   #
 #####################################
 
-export COMP_INTERNAL_NIC=eno16777984
+export COMP_INTERNAL_NIC=eno33557248
 
 export STATIC_IP_COMP=10.0.0.11
 

@@ -14,3 +14,5 @@ export -f callscript
 callscript "services/system" "selinux.sh"
 
 callscript "services/system" "network.sh"
+
+reboot now
