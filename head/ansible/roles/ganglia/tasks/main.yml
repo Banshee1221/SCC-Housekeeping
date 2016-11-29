@@ -1,18 +1,45 @@
 ---
-- name: Add the docker repo to yum
-  copy: src="docker.repo" dest="/etc/yum.repos.d/docker.repo"
+- name: Install required packages to build ganglia
+  yum: name="{{ item }}" state=present
+  with_items:
+    - rsync
+    - tar
+    - apr-devel
+    - rrdtool-devel
+    - libconfuse-devel
+    - pcre-devel
+    - expat-devel
+    - gcc
+    - zlib-devel
+    - make
+    - php
+    - httpd
 
-- name: Install the Docker daemon on all nodes
-  yum: name=docker-engine state=present
+- name: Add the ganglia group
+  group:
+    name: ganglia
+    state: present
 
-- name: Enable and start the docker daemon on all nodes
-  systemd:
-    name: docker
-    state: started
-    enabled: yes
+- name: Add the ganglia user
+  user:
+    name: ganglia
+    group: ganglia
+    state: present
+    createhome: no
 
-- name: Get the docklia repo
-  git:
-    repo: https://{{ username }}:{{ password }}@github.com/Banshee1221/Docklia.git
-    dest: "/tmp/docklia"
-    version: master
+- name: Get ganglia source
+  get_url: dest="/tmp" url="{{ ganglia_url }}"
+
+- name: Extract source
+  shell: tar -zxf "{{ ganglia_pkg_full }}"
+  args:
+    chdir: "/tmp"
+
+- name: Configure, compile, install
+  shell: "{{ item }}"
+  with-items:
+    - ./configure --with-gmetad
+    - make -j{{ headnode_cores }}
+    - make install
+  args:
+    chdir: "{{ ganglia_build_dir }}"

@@ -1,0 +1,7 @@
+---
+ganglia_ver: 3.7.2
+ganglia_pkg: ganglia-{{ ganglia_ver }}
+ganglia_ext: tar.gz
+ganglia_pkg_full: {{ ganglia_pkg }}:{{ ganglia_ext }}
+ganglia_url: "http://downloads.sourceforge.net/project/ganglia/ganglia%20monitoring%20core/{{ ganglia_ver }}/{{ ganglia_pkg_full }}"
+ganglia_build_dir: /tmp/{{ ganglia_pkg }}

@@ -1,14 +1,8 @@
 ---
 ompi_global_ver: "v2.0"
-
 ompi_ver: "2.0.1"
-
 ompi_pkg: "openmpi-{{ ompi_ver }}"
-
 ompi_ext: "tar.gz"
-
 omp_pkg_name: "{{ ompi_pkg }}.{{ ompi_ext }}"
-
 ompi_url: "https://www.open-mpi.org/software/ompi/{{ ompi_global_ver }}/downloads/{{ omp_pkg_name }}"
-
 ompi_build_dir: /tmp/{{ ompi_pkg }}

@@ -28,23 +28,30 @@
   roles:
     - openmpi
 
-# Install Ganglia
-- hosts: all_nodes
+# ganglia
+- hosts: localhost
   user: root
 
   roles:
     - ganglia
 
-  tasks:
-    - include: roles/ganglia/tasks/head.yml
-      when: ganglia_host is defined
-    - include: roles/ganglia/tasks/compute.yml
-      when: ganglia_client is defined
-
-  vars_prompt:
-    - name: "username"
-      prompt: "Git username"
-      private: no
-    - name: "password"
-      prompt: "Git Access Key"
-      private: yes
+# Install Ganglia
+#- hosts: all_nodes
+#  user: root
+#
+#  roles:
+#    - ganglia
+#
+#  tasks:
+#    - include: roles/ganglia/tasks/head.yml
+#      when: ganglia_host is defined
+#    - include: roles/ganglia/tasks/compute.yml
+#      when: ganglia_client is defined
+#
+#  vars_prompt:
+#    - name: "username"
+#      prompt: "Git username"
+#      private: no
+#    - name: "password"
+#      prompt: "Git Access Key"
+#      private: yes

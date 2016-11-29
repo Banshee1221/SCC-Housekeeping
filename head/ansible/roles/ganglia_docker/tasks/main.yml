@@ -1,0 +1,18 @@
+---
+- name: Add the docker repo to yum
+  copy: src="docker.repo" dest="/etc/yum.repos.d/docker.repo"
+
+- name: Install the Docker daemon on all nodes
+  yum: name=docker-engine state=present
+
+- name: Enable and start the docker daemon on all nodes
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Get the docklia repo
+  git:
+    repo: https://{{ username }}:{{ password }}@github.com/Banshee1221/Docklia.git
+    dest: "/tmp/docklia"
+    version: master
