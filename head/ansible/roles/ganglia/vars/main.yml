@@ -7,8 +7,8 @@ ganglia_url: "http://downloads.sourceforge.net/project/ganglia/ganglia%20monitor
 ganglia_build_dir: /tmp/{{ ganglia_pkg }}
 
 web_ganglia_ver: 3.7.1
-web_ganglia_pkg: ganglia-web-{{ ganglia_ver }}
+web_ganglia_pkg: ganglia-web-{{ web_ganglia_ver }}
 web_ganglia_ext: tar.gz
-web_ganglia_pkg_full: "{{ ganglia_pkg }}.{{ ganglia_ext }}"
-web_ganglia_url: "https://sourceforge.net/projects/ganglia/files/ganglia-web/{{ ganglia_ver }}/{{ ganglia_pkg_full }}"
+web_ganglia_pkg_full: "{{ web_ganglia_pkg }}.{{ web_ganglia_ext }}"
+web_ganglia_url: "https://sourceforge.net/projects/ganglia/files/ganglia-web/{{ web_ganglia_ver }}/{{ web_ganglia_pkg_full }}"
 web_ganglia_build_dir: /tmp/{{ web_ganglia_pkg }}

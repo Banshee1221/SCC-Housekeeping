@@ -46,7 +46,7 @@
     chdir: "{{ ganglia_build_dir }}"
 
 - name: Copy correct service files
-  copy: src="{{ item.key }}/{{ item.value.name }}" dest="/usr/lib/systemd/system/{{ item.value.name }}"
+  copy: src="{{ ganglia_build_dir }}/{{ item.key }}/{{ item.value.name }}" dest="/usr/lib/systemd/system/{{ item.value.name }}"
   with_dict:
     gmetad:
       name: gmetad.service
@@ -56,7 +56,8 @@
 - name: Prep for ganglia-web
   shell: "{{ item }}"
   with_items:
-    - mkdir -p /var/lib/ganglia
+    - mkdir -p /usr/local/var/run/
+    - mkdir -p /var/lib/ganglia/rrds
     - chown nobody:nobody /var/lib/ganglia/rrds
 
 - name: Get ganglia-web source
@@ -82,10 +83,8 @@
     - gmond.conf
 
 - name: Enable and start services
-  systemd:
-    name: "{{ items }}"
-    enabled: yes
-    state: started
+  systemd: name="{{ item }}" enabled=yes state=started
   with_items:
     - gmetad.service
     - gmond.service
+    - httpd.service
