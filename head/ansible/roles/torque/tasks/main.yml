@@ -25,13 +25,20 @@
     - make install
 
 - name: Add configs for server_name and lib path
-  shell: "{{ item }}"
-  with_items:
-    - touch /var/spool/torque/server_name
-    - echo "{{ head_fqdn }}" > /var/spool/torque/server_name
-    - echo "/usr/local/lib" > /etc/ld.so.conf.d/torque.conf
-    - ldconfig
-    - echo "" > /var/spool/torque/server_priv/nodes
+  lineinfile: dest="{{ item.value.task }}" line="{{ item.value.line }} create=yes"
+  with_dict:
+    srv_name:
+      task: dest=/var/spool/torque/server_name
+      line: line="{{ head_fqdn }}"
+    ld:
+      task: dest=/etc/ld.so.conf.d/torque.conf
+      line: line="/usr/local/lib"
+
+- name: Run ldconfig on host
+  shell: ldconfig
+
+- name: Create nodes file for host
+  file: path="/var/spool/torque/server_priv/nodes" state=touch
 
 - name: Add list of nodes to server_priv
   lineinfile: dest=/var/spool/torque/server_priv/nodes line="{{ item.key }} np={{ item.value.cpus }}" create=yes state=present
