@@ -25,7 +25,7 @@
     - make install
 
 - name: Add configs for server_name and lib path
-  lineinfile: dest="{{ item.value.task }}" line="{{ item.value.line }} create=yes"
+  lineinfile: dest="{{ item.value.task }}" line="{{ item.value.line }}" create=yes
   with_dict:
     srv_name:
       task: dest=/var/spool/torque/server_name
