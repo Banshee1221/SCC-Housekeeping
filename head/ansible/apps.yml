@@ -34,11 +34,14 @@
 
   roles:
     - ganglia
-  post_tasks:
-    - include: roles/ganglia/tasks/post.yml
+
+  tasks:
+    - include: roles/ganglia/tasks/head.yml
       delegate_to: head.cluster
       connection: local
       run_once: true
+  post_tasks:
+    - inlcude: roles/ganglia/tasks/post.yml
 
 # Install Ganglia
 #- hosts: all_nodes
