@@ -1,0 +1,7 @@
+---
+- name: Restart the torque services on the headnode
+  shell: "systemctl restart {{ item }}"
+  with_items:
+    - trqauthd.service
+    - pbs_server.service
+    - pbs_sched.service

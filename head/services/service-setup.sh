@@ -5,7 +5,6 @@ INSTALL_LIST="
   docker
   chrony
   ansible
-  pexpect
   nfs-utils libnfsidmap
 "
 

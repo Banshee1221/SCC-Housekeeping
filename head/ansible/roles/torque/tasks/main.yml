@@ -7,12 +7,12 @@
     - libxml2-devel
 
 - name: Clear out the build directory if it exists
-  command: rm -rf {{ torque_compile_dir }}
+  file: src="{{ torque_compile_dir }}" state=absent
 
 - name: Grab Torque source from github
   git:
     repo: https://github.com/adaptivecomputing/torque.git
-    dest: {{ torque_compile_dir }}
+    dest: "{{ torque_compile_dir }}"
     version: master
 
 - name: Autogen, configure, make and install
@@ -28,14 +28,14 @@
   shell: "{{ item }}"
   with_items:
     - touch /var/spool/torque/server_name
-    - echo "{{ ansible_fqdn }}" > /var/spool/torque/server_name
+    - echo "{{ head_fqdn }}" > /var/spool/torque/server_name
     - echo "/usr/local/lib" > /etc/ld.so.conf.d/torque.conf
     - ldconfig
     - touch /var/spool/torque/server_priv/nodes
 
 - name: Add list of nodes to server_priv
   lineinfile: dest=/var/spool/torque/server_priv/nodes line="{{ item.key }} np={{ item.value.cpus }}"
-  with_items: "{{ torque_nodelist }}"
+  with_dict: "{{ torque_nodelist }}"
 
 - name: Copy the systemd services for the headnode
   copy: src={{ torque_compile_dir }}/contrib/systemd/{{ item }} dest=/usr/lib/systemd/system/{{ item }}
@@ -69,14 +69,3 @@
     - systemctl restart pbs_sched
     - systemctl restart trqauthd
     - make packages
-
-- hosts: compute_nodes
-  tasks:
-    - include: computenode.yml
-
-- name: Restart the torque services on the headnode
-  shell: "systemctl restart {{ item }}"
-  with_items:
-    - trqauthd.service
-    - pbs_server.service
-    - pbs_sched.service

@@ -1,7 +1,13 @@
 ---
-- hosts: localhost
+- hosts: compute_nodes
   user: root
-  roles:
-    #- chrony
-    - torque
-    #- ganglia
+  pre_tasks:
+    - include: roles/torque/tasks/main.yml
+      delegate_to: head.cluster
+      run_once: true
+  tasks:
+    - include: roles/torque/tasks/computenode.yml
+  post_tasks:
+    - include: roles/torque/tasks/post.yml
+      delegate_to: head.cluster
+      run_once: true
