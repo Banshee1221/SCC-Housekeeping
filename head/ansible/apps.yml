@@ -40,8 +40,9 @@
       delegate_to: head.cluster
       connection: local
       run_once: true
+
   post_tasks:
-    - inlcude: roles/ganglia/tasks/post.yml
+    - include: roles/ganglia/tasks/post.yml
 
 # Install Ganglia
 #- hosts: all_nodes
