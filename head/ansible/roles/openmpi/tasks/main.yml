@@ -3,7 +3,7 @@
   file: path="{{ ompi_build_dir }}" state=absent
 
 - name: Grab OpenMPI source from open-mpi.org
-  get_url: dest="/tmp" url="{{ ompi_ext }}"
+  get_url: dest="/tmp" url="{{ ompi_url }}"
 
 - name: Extract the source files
   shell: tar -zxf "{{ omp_pkg_name }}"
@@ -11,7 +11,7 @@
     chdir: "/tmp"
 
 - name: Configure, make and install OpenMPI
-  shell: {{ item }}
+  shell: ""{{ item }}"
   with_items:
     - ./configure --prefix=/usr/local
     - make -j {{ headnode_cores }} all
