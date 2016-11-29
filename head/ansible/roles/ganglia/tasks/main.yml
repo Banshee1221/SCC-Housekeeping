@@ -1,6 +1,9 @@
 ---
+- name: Ensure EPEL is enabled
+  yum: name="epel-release" state=present
+
 - name: Install required packages to build ganglia
-  yum: name="{{ item }}" state=present
+  yum: name="{{ item }}" state=present update_cache=yes
   with_items:
     - rsync
     - tar
