@@ -2,38 +2,49 @@
 # Installing torque. This could probably be improved
 - hosts: compute_nodes
   user: root
+
   roles:
     - torque
+
   pre_tasks:
     - include: roles/torque/tasks/head.yml
       delegate_to: head.cluster
       connection: local
       run_once: true
+
   tasks:
     - include: roles/torque/tasks/computenode.yml
+
   post_tasks:
     - include: roles/torque/tasks/post.yml
       delegate_to: head.cluster
+      connection: local
       run_once: true
 
 # Install openmpi
 - hosts: localhost
   user: root
+
   roles:
     - openmpi
 
 # Install Ganglia
 - hosts: all_nodes
   user: root
+
   roles:
     - ganglia
 
-- hosts: localhost
-  user: root
   tasks:
     - include: roles/ganglia/tasks/head.yml
-
-- hosts: compute_nodes
-  user: root
-  tasks:
+      when: ganglia_host is defined
     - include: roles/ganglia/tasks/compute.yml
+      when: ganglia_client is defined
+
+  vars_prompt:
+    - name: "username"
+      prompt: "Git username"
+      private: no
+    - name: "password"
+      prompt: "Git Access Key"
+      private: yes

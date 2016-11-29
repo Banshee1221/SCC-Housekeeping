@@ -1,13 +1,19 @@
 # List any nodes here. You can have different groups. [name] signifies a group
 # and anything there under is a host that belongs to that group.
 [localhost]
-headnode.cluster
+head.cluster
 
 [compute_nodes]
 node01.cluster
 node02.cluster
 
 [all_nodes]
-headnode.cluster
-node01.cluster
-node02.cluster
+head.cluster ganglia_host=true
+node01.cluster ganglia_client=true
+node02.cluster ganglia_client=true
+
+[localhost:vars]
+ganglia_host=true
+
+[compute_nodes:vars]
+ganglia_client=true

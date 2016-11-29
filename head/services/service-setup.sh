@@ -2,7 +2,6 @@
 
 # List of services to be installed on the head node
 INSTALL_LIST="
-  docker
   chrony
   ansible
   nfs-utils libnfsidmap

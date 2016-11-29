@@ -10,4 +10,9 @@
     name: docker
     state: started
     enabled: yes
-    
+
+- name: Get the docklia repo
+  git:
+    repo: https://{{ username }}:{{ password }}@github.com/Banshee1221/Docklia.git
+    dest: "/tmp/docklia"
+    version: master
