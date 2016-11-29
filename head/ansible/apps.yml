@@ -1,12 +1,15 @@
 ---
 # Installing torque. This could probably be improved
-
-- hosts: localhost
-  user: root
-  roles:
-    - torque
-
 - hosts: compute_nodes
   user: root
+  pre_tasks:
+    - include: roles/torque/tasks/main.yml
+      delegate_to: head.cluster
+      connection: local
+      run_once: true
   tasks:
     - include: roles/torque/tasks/computenode.yml
+  post_tasks:
+    - include: roles/torque/tasks/post.yml
+      delegate_to: head.cluster
+      run_once: true

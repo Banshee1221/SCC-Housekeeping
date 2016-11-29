@@ -7,7 +7,7 @@
     - libxml2-devel
 
 - name: Clear out the build directory if it exists
-  file: src="{{ torque_compile_dir }}" state=absent
+  file: path="{{ torque_compile_dir }}" state=absent
 
 - name: Grab Torque source from github
   git:
@@ -31,10 +31,10 @@
     - echo "{{ head_fqdn }}" > /var/spool/torque/server_name
     - echo "/usr/local/lib" > /etc/ld.so.conf.d/torque.conf
     - ldconfig
-    - touch /var/spool/torque/server_priv/nodes
+    - echo "" > /var/spool/torque/server_priv/nodes
 
 - name: Add list of nodes to server_priv
-  lineinfile: dest=/var/spool/torque/server_priv/nodes line="{{ item.key }} np={{ item.value.cpus }}"
+  lineinfile: dest=/var/spool/torque/server_priv/nodes line="{{ item.key }} np={{ item.value.cpus }}" create=yes state=present
   with_dict: "{{ torque_nodelist }}"
 
 - name: Copy the systemd services for the headnode
