@@ -11,7 +11,7 @@
     chdir: "/tmp"
 
 - name: Configure, make and install OpenMPI
-  shell: ""{{ item }}"
+  shell: "{{ item }}"
   with_items:
     - ./configure --prefix=/usr/local
     - make -j {{ headnode_cores }} all

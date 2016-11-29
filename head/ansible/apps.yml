@@ -19,3 +19,19 @@
   user: root
   roles:
     - openmpi
+
+# Install Ganglia
+- hosts: all_nodes
+  user: root
+  roles:
+    - ganglia
+
+- hosts: localhost
+  user: root
+  tasks:
+    - include: roles/ganglia/tasks/head.yml
+    
+- hosts: compute_nodes
+  user: root
+  tasks:
+    - include: roles/ganglia/tasks/compute.yml

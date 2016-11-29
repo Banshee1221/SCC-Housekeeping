@@ -1,7 +1,7 @@
 # List any nodes here. You can have different groups. [name] signifies a group
 # and anything there under is a host that belongs to that group.
 [localhost]
-127.0.0.1
+headnode.cluster
 
 [compute_nodes]
 node01.cluster
