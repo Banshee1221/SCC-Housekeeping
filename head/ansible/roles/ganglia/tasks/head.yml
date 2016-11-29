@@ -20,8 +20,9 @@
   args:
     chdir: "/tmp"
 
+# THis is a hack, issue with ansible? - https://github.com/ansible/ansible/issues/14341
 - name: Copy configured Makefile
-  copy: src="Makefile" dest={{ web_ganglia_build_dir }}
+  copy: src="./roles/ganglia/files/Makefile" dest={{ web_ganglia_build_dir }}
 
 - name: Configure, compile, install
   shell: make install
