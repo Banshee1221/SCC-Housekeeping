@@ -37,9 +37,55 @@
 
 - name: Configure, compile, install
   shell: "{{ item }}"
-  with-items:
+  with_items:
     - ./configure --with-gmetad
     - make -j{{ headnode_cores }}
     - make install
+    - ldconfig
   args:
     chdir: "{{ ganglia_build_dir }}"
+
+- name: Copy correct service files
+  copy: src="{{ item.key }}/{{ item.value.name }}" dest="/usr/lib/systemd/system/{{ item.value.name }}"
+  with_dict:
+    gmetad:
+      name: gmetad.service
+    gmond:
+      name: gmond.service
+
+- name: Prep for ganglia-web
+  shell: "{{ item }}"
+  with_items:
+    - mkdir -p /var/lib/ganglia
+    - chown nobody:nobody /var/lib/ganglia/rrds
+
+- name: Get ganglia-web source
+  get_url: dest="/tmp" url="{{ web_ganglia_url }}"
+
+- name: Extract source
+  shell: tar -zxf "{{ web_ganglia_pkg_full }}"
+  args:
+    chdir: "/tmp"
+
+- name: Copy configured Makefile
+  copy: src="Makefile" dest={{ web_ganglia_build_dir }}
+
+- name: Configure, compile, install
+  shell: make install
+  args:
+    chdir: "{{ web_ganglia_build_dir }}"
+
+- name: Copy the config files
+  copy: src="{{ item }}" dest="/usr/local/etc/{{ item }}"
+  with_items:
+    - gmetad.conf
+    - gmond.conf
+
+- name: Enable and start services
+  systemd:
+    name: "{{ items }}"
+    enabled: yes
+    state: started
+  with_items:
+    - gmetad.service
+    - gmond.service
