@@ -1,0 +1,6 @@
+---
+- name: Enable httpd on the headnode
+  systemd:
+    name: httpd
+    state: started
+    enabled: yes
