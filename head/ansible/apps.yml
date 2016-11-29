@@ -2,8 +2,10 @@
 # Installing torque. This could probably be improved
 - hosts: compute_nodes
   user: root
+  roles:
+    - torque
   pre_tasks:
-    - include: roles/torque/tasks/main.yml
+    - include: roles/torque/tasks/head.yml
       delegate_to: head.cluster
       connection: local
       run_once: true
@@ -30,7 +32,7 @@
   user: root
   tasks:
     - include: roles/ganglia/tasks/head.yml
-    
+
 - hosts: compute_nodes
   user: root
   tasks:
