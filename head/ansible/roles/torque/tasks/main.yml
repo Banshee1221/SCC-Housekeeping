@@ -40,10 +40,6 @@
 - name: Create nodes file for host
   file: path="/var/spool/torque/server_priv/nodes" state=touch
 
-- name: Add list of nodes to server_priv
-  lineinfile: dest=/var/spool/torque/server_priv/nodes line="{{ item.key }} np={{ item.value.cpus }}" create=yes state=present
-  with_dict: "{{ torque_nodelist }}"
-
 - name: Copy the systemd services for the headnode
   copy: src={{ torque_compile_dir }}/contrib/systemd/{{ item }} dest=/usr/lib/systemd/system/{{ item }}
   with_items:
@@ -76,3 +72,7 @@
     - systemctl restart pbs_sched
     - systemctl restart trqauthd
     - make packages
+
+- name: Add list of nodes to server_priv
+  lineinfile: dest=/var/spool/torque/server_priv/nodes line="{{ item.key }} np={{ item.value.cpus }}" create=yes state=present
+  with_dict: "{{ torque_nodelist }}"
