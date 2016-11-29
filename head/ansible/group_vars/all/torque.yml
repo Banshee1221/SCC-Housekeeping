@@ -1,3 +1,4 @@
+---
 torque_nodelist:
   node01.cluster:
     cpus: 4

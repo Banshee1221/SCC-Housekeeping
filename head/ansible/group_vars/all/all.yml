@@ -1,12 +1,17 @@
 ---
 headnode_cores: 2
-computenode_cores: 4 
+
+computenode_cores: 4
+
 head_fqdn: head.cluster
+
 head_internal_ip: 10.0.0.10
+
 compute_nameservers:
   - 192.102.9.15
   - 192.102.9.66
 #  - 8.8.8.8
 #  - 8.8.4.4
+
 nfs_mounts:
   - /scratch
