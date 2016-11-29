@@ -16,7 +16,7 @@
     version: master
 
 - name: Autogen, configure, make and install
-  command: "chdir={{ torque_compile_dir }} {{ item }}"
+  shell: "chdir={{ torque_compile_dir }} {{ item }}"
   with_items:
     - ./autogen.sh
     - ./configure

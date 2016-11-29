@@ -1,0 +1,21 @@
+---
+- name: Clear out the build directory if it exists
+  file: path="{{ ompi_build_dir }}" state=absent
+
+- name: Grab OpenMPI source from open-mpi.org
+  get_url: dest="/tmp" url="{{ ompi_ext }}"
+
+- name: Extract the source files
+  shell: tar -zxf "{{ omp_pkg_name }}"
+  args:
+    chdir: "/tmp"
+
+- name: Configure, make and install OpenMPI
+  shell: {{ item }}
+  with_items:
+    - ./configure --prefix=/usr/local
+    - make -j {{ headnode_cores }} all
+    - make install
+    - ldconfig
+  args:
+    chdir: "{{ ompi_build_dir }}"

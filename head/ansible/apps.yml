@@ -13,3 +13,9 @@
     - include: roles/torque/tasks/post.yml
       delegate_to: head.cluster
       run_once: true
+
+# Install openmpi
+- hosts: localhost
+  user: root
+  roles:
+    - openmpi
