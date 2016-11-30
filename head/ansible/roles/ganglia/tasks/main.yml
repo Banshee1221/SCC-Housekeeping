@@ -15,4 +15,3 @@
   systemd:
     name: gmond
     enabled: yes
-    state: started

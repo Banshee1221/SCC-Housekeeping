@@ -1,0 +1,5 @@
+---
+- name: Start the compute node gmond services
+  systemd:
+    name: gmond
+    state: started
