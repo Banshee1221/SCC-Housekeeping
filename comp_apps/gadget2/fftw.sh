@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 FFTW_VER="2.1.5"
 FFTW_PKG="fftw"

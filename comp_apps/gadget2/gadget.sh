@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 GADGET_VER="2.0.7"
 GADGET_PKG="gadget"

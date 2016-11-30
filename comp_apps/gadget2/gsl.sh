@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 GSL_VER="1.9"
 GSL_PKG="gsl"
