@@ -5,6 +5,8 @@ INSTALL_LIST="
   chrony
   ansible
   nfs-utils libnfsidmap
+  libselinux-python
+  cmake
 "
 
 # Install all listed apps
