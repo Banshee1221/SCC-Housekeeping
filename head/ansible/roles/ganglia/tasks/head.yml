@@ -8,7 +8,6 @@
 - name: Prep for ganglia-web
   shell: "{{ item }}"
   with_items:
-    - mkdir -p /usr/local/var/run/
     - mkdir -p /var/lib/ganglia/rrds
     - chown nobody:nobody /var/lib/ganglia/rrds
 

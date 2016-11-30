@@ -43,6 +43,7 @@
     - make -j{{ headnode_cores }}
     - make install
     - ldconfig
+    - mkdir -p /usr/local/var/run/
   args:
     chdir: "{{ ganglia_build_dir }}"
 
