@@ -1,0 +1,17 @@
+---
+- name: Install the chrony time service for compute nodes
+  yum:
+    name: chrony
+    state: present
+
+- name: Copy the preconfigured config file
+  copy: src="chrony.conf" dest="/etc/chrony.conf"
+
+- name: Start and enable the services
+  systemd:
+    name: chronyd
+    enabled: yes
+    state: started
+
+- name: Manually update time
+  shell: "chronyc -a makestep"
