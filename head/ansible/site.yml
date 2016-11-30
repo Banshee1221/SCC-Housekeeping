@@ -4,3 +4,4 @@
   roles:
     - network_bootstrap
     - nfs_setup
+    - housekeeping

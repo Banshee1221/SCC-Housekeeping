@@ -8,8 +8,6 @@ INSTALL_LIST="
   libselinux-python
   cmake
   expect
-  gtk2
-  kernel-devel
 "
 
 # Install all listed apps

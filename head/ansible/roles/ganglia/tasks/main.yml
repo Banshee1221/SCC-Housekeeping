@@ -44,6 +44,8 @@
     - make install
     - ldconfig
     - mkdir -p /usr/local/var/run/
+    - mkdir -p /var/lib/ganglia/rrds
+    - chown nobody:nobody /var/lib/ganglia/rrds
   args:
     chdir: "{{ ganglia_build_dir }}"
 
