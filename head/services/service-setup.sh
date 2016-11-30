@@ -7,6 +7,9 @@ INSTALL_LIST="
   nfs-utils libnfsidmap
   libselinux-python
   cmake
+  expect
+  gtk2
+  kernel-devel
 "
 
 # Install all listed apps
