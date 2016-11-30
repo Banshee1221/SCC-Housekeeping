@@ -1,9 +1,67 @@
 ---
-- name: Install host-specific components
-  yum: name="{{ item }}" state=present
+- name: Install required packages to build ganglia
+  yum: name="{{ item }}" state=present update_cache=yes
   with_items:
+    - rsync
+    - tar
+    - apr-devel
+    - rrdtool-devel
+    - libconfuse-devel
+    - pcre-devel
+    - expat-devel
+    - gcc
+    - zlib-devel
+    - make
     - php
     - httpd
+
+- name: Add the ganglia group
+  group:
+    name: ganglia
+    state: present
+
+- name: Add the ganglia user
+  user:
+    name: ganglia
+    group: ganglia
+    state: present
+    createhome: no
+
+- name: Get ganglia source
+  get_url: dest="/tmp" url="{{ ganglia_url }}"
+
+- name: Extract source
+  shell: tar -zxf "{{ ganglia_pkg_full }}"
+  args:
+    chdir: "/tmp"
+
+- name: Configure, compile, install
+  shell: "{{ item }}"
+  with_items:
+    - ./configure --with-gmetad
+    - make -j{{ headnode_cores }}
+    - make install
+    - ldconfig
+    - mkdir -p /usr/local/var/run/
+    - mkdir -p /var/lib/ganglia/rrds
+    - chown nobody:nobody /var/lib/ganglia/rrds
+  args:
+    chdir: "{{ ganglia_build_dir }}"
+
+- name: Copy correct service files
+  copy: src="{{ ganglia_build_dir }}/{{ item.key }}/{{ item.value.name }}" dest="/usr/lib/systemd/system/{{ item.value.name }}"
+  with_dict:
+    gmetad:
+      name: gmetad.service
+    gmond:
+      name: gmond.service
+
+# THis is a hack, issue with ansible? - https://github.com/ansible/ansible/issues/14341
+- name: Copy the config files
+  copy: src="./roles/ganglia/files/{{ item }}" dest="/usr/local/etc/{{ item }}"
+  with_items:
+    - gmetad.conf
+    - gmond.conf
 
 - name: Get ganglia-web source
   get_url: dest="/tmp" url="{{ web_ganglia_url }}"
@@ -23,4 +81,8 @@
     chdir: "{{ web_ganglia_build_dir }}"
 
 - name: Enable and start services
-  systemd: name="httpd" enabled=yes state=started
+  systemd: name="{{ item }}" enabled=yes state=started
+  with_items:
+    - gmetad.service
+    - gmond.service
+    - httpd.service

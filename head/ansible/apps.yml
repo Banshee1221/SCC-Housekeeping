@@ -29,7 +29,7 @@
     - openmpi
 
 # ganglia
-- hosts: all_nodes
+- hosts: compute_nodes
   user: root
 
   roles:
