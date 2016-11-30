@@ -1,3 +1,0 @@
----
-- name: Install docker
-  shell: echo "hi"
