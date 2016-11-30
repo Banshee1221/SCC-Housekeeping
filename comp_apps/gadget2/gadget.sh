@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GADGET_VER="2.0.7 "
+GADGET_VER="2.0.7"
 GADGET_PKG="gadget"
 GADGET_EXT="tar.gz"
 GADGET_PKG_NAME=$GADGET_PKG-$GADGET_VER
