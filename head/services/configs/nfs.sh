@@ -18,5 +18,9 @@ do
   echo "$each *(rw,sync,no_root_squash,no_subtree_check)" >> /etc/exports
 done
 
+mkdir -p /scratch/deps
+echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/scratch/deps/lib" >> /home/$CLUSTER_USER/.bashrc
+echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/scratch/deps/lib" >> /root/.bashrc
+
 # Export all shared FS
 exportfs -a

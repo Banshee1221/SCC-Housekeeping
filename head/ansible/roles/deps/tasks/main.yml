@@ -1,0 +1,15 @@
+---
+- name: Install deps required for certain benchmarks on all nodes
+  yum: name="{{ item }}" state=present
+  with_items:
+    - atlas
+    - atlas-devel
+    - lapack
+    - lapack-devel
+    - lapack64
+    - lapack64-devel
+    - scalapack-common
+    - scalapack-openmpi
+    - scalapack-openmpi-devel
+    - scalapack-mpich
+    - scalapack-mpich-devel

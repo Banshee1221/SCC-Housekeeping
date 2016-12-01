@@ -7,6 +7,8 @@ head_fqdn: head.cluster
 
 head_internal_ip: 10.0.0.10
 
+cluster_user: "cluster"
+
 compute_nameservers:
   - 192.102.9.15
   - 192.102.9.66

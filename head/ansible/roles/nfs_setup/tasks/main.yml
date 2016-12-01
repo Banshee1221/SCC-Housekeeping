@@ -26,3 +26,9 @@
 
 - name: Mount the new directories on the compute nodes
   shell: mount -a
+
+- name: Set new env variables
+  shell: "{{ item }}"
+  with_items:
+    - echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/scratch/deps/lib" >> /home/{{ cluster_user }}/.bashrc
+    - echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/scratch/deps/lib" >> /root/.bashrc

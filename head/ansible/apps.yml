@@ -22,7 +22,7 @@
       run_once: true
 
 # Install openmpi
-- hosts: localhost
+- hosts: all_nodes
   user: root
 
   roles:
@@ -42,6 +42,12 @@
 
   post_tasks:
     - include: roles/ganglia/tasks/post.yml
+
+- hosts: all_nodes
+  user: root
+
+  roles:
+    - deps
 
 # Install Ganglia
 #- hosts: all_nodes

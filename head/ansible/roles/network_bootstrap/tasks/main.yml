@@ -11,3 +11,12 @@
 
 - name: Set the /etc/resolv.conf file of the compute nodes as immutable
   shell: chattr +i /etc/resolv.conf
+
+- name: Install dev tools on nodes
+  yum: name="@Development tools" state=present
+
+- name: Adjust swappiness of compute nodes
+  shell: "{{ item }}"
+  with_items:
+    - sysctl vm.swappiness=10
+    - echo 'vm.swappiness=10' >> /etc/sysctl.conf
