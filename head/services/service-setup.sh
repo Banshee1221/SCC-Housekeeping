@@ -21,3 +21,6 @@ callscript "configs" "ansible.sh"
 
 # NFS
 callscript "configs" "nfs.sh"
+
+# Bash ITNEL
+callscript "system" "bash.sh"

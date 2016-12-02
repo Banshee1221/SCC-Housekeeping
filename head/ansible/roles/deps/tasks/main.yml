@@ -13,3 +13,6 @@
     - scalapack-openmpi-devel
     - scalapack-mpich
     - scalapack-mpich-devel
+
+- name: Adjust values for memory lock limits:
+  shell: "printf '*            hard   memlock           unlimited\n*            soft    memlock           unlimited\n' >> /etc/security/limits.conf"
