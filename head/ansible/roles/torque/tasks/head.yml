@@ -15,13 +15,13 @@
 - name: Extract directory
   shell: "{{ item }}"
   with_items:
-    - cd /tmp
-    - tar -zxf torque-{{ torque_ver }}
+    - tar -zxf torque-{{ torque_ver }}.tar.gz
+  args:
+    chdir: "/tmp"
 
-- name: Autogen, configure, make and install
+- name: Configure, make and install
   shell: "chdir={{ torque_compile_dir }} {{ item }}"
   with_items:
-    - ./autogen.sh
     - ./configure
     - make -j {{ headnode_cores }}
     - libtool --finish /usr/local/lib

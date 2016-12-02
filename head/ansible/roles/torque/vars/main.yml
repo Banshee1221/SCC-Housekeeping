@@ -1,6 +1,6 @@
 ---
 
-torque_url: "http://wpfilebase.s3.amazonaws.com/torque/torque-6.1.0.tar.gz"
+torque_url: "https://wpfilebase.s3.amazonaws.com/torque/torque-5.1.3-1462984387_205d70d.tar.gz"
 
 torque_nodelist:
   node01.cluster:
@@ -8,7 +8,7 @@ torque_nodelist:
   node02.cluster:
     cpus: 4
 
-torque_ver: "6.1.0"
+torque_ver: "5.1.3-1462984387_205d70d"
 torque_compile_dir: /tmp/torque-{{ torque_ver }}
 
 torque_client_packages:

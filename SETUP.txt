@@ -1,0 +1,13 @@
+OS Install:
+  - DISABLE KDUMP DURING OS INSTALL
+  - CREATE USER "cluster" AND ENABLE ADMINISTRATOR ON IT!
+  - ENABLE ROOT BY SETTING PASSWORD
+
+Setup:
+  ( Make sure you know your ethernet adapters )
+  - Compute nodes:
+    -- EDIT vars AND CHANGE THE IP OF THE NODE
+    -- RUN ./installer.sh --compute ON ALL COMPUTE NODES
+  - Head nodes:
+    -- EDIT vars. ALL LINES THAT SAY "EDIT THIS!". DO NOT TOUCH THE OTHERS!!!!!!
+    -- RUN ./installer.sh --head and watch the magic
