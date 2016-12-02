@@ -46,12 +46,13 @@
 
 - name: Add configs for server_name and lib path
   shell: "{{ item }}"
-  with_items:
-    - echo '{{ head_fqdn }}' > /var/spool/torque/server_name
-    - echo "/usr/local/lib" > /etc/ld.so.conf.d/torque.conf
+  lineinfile: dest=/var/spool/torque/server_name line="{{ head_fqdn }}" create=yes
 
 - name: Run ldconfig on host
-  shell: "ldconfig"
+  shell: "{{ item }}"
+  with_items:
+    - echo "/usr/local/lib" > /etc/ld.so.conf.d/torque.conf
+    - ldconfig
 
 - name: Start trqauthd to do the database setup
   systemd: name=trqauthd.service state=started
