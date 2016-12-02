@@ -27,19 +27,6 @@
     - libtool --finish /usr/local/lib
     - make install
 
-- name: Add configs for server_name and lib path
-  lineinfile: dest="{{ item.value.task }}" line="{{ item.value.line }}" create=yes
-  with_dict:
-    srv_name:
-      task: dest=/var/spool/torque/server_name
-      line: line="{{ head_fqdn }}"
-    ld:
-      task: dest=/etc/ld.so.conf.d/torque.conf
-      line: line="/usr/local/lib"
-
-- name: Run ldconfig on host
-  shell: ldconfig
-
 - name: Create nodes file for host
   file: path="/var/spool/torque/server_priv/nodes" state=touch
 
@@ -56,6 +43,15 @@
     - trqauthd.service
     - pbs_server.service
     - pbs_sched.service
+
+- name: Add configs for server_name and lib path
+  shell: "{{ item }}"
+  with_items:
+    - echo '{{ head_fqdn }}' > /var/spool/torque/server_name
+    - echo "/usr/local/lib" > /etc/ld.so.conf.d/torque.conf
+
+- name: Run ldconfig on host
+  shell: "ldconfig"
 
 - name: Start trqauthd to do the database setup
   systemd: name=trqauthd.service state=started

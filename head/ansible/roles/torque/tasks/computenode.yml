@@ -10,8 +10,8 @@
   shell: sh /tmp/{{ item }} --install
   with_items: "{{ torque_client_packages }}"
 
-- name: Copy the library config to the compute nodes
-  copy: src=/etc/ld.so.conf.d/torque.conf dest=/etc/ld.so.conf.d/
+- name: Write lib for compute
+  shell: "echo '/usr/local/lib' > /etc/ld.so.conf.d/torque.conf"
 
 - name: Run library config binary on compute nodes
   shell: /sbin/ldconfig
