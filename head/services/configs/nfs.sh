@@ -24,3 +24,5 @@ echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/scratch/deps/lib" >> /root/.bashr
 
 # Export all shared FS
 exportfs -a
+
+chown $CLUSTER_USER:$CLUSTER_USER -R /scratch

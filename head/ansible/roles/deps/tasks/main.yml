@@ -30,3 +30,9 @@
   with_items:
     - echo 'fs.file-max=6544018' >> /etc/sysctl.conf
     - echo 'net.core.somaxconn=512' >> /etc/sysctl.conf
+
+- name: Add nfs shares home to the FSTAB of the compute nodes
+  lineinfile: dest=/etc/fstab line="{{ head_internal_ip }}:/home /home nfs rw,sync,hard,intr 0 0"
+
+- name: Mount the new directories on the compute nodes
+  shell: mount -a
