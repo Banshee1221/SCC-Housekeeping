@@ -9,11 +9,14 @@
 - name: Clear out the build directory if it exists
   file: path="{{ torque_compile_dir }}" state=absent
 
-- name: Grab Torque source from github
-  git:
-    repo: https://github.com/adaptivecomputing/torque.git
-    dest: "{{ torque_compile_dir }}"
-    version: master
+- name: Grab Torque source
+  get_url: dest="/tmp" url="{{ torque_url }}"
+
+- name: Extract directory
+  shell: "{{ item }}"
+  with_items:
+    - cd /tmp
+    - tar -zxf torque-{{ torque_ver }}
 
 - name: Autogen, configure, make and install
   shell: "chdir={{ torque_compile_dir }} {{ item }}"

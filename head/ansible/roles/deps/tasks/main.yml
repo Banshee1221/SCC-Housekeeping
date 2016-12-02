@@ -13,6 +13,7 @@
     - scalapack-openmpi-devel
     - scalapack-mpich
     - scalapack-mpich-devel
+    - time
 
 - name: Adjust values for memory lock limits
   shell: "printf '*            hard   memlock           unlimited\n*            soft    memlock           unlimited\n' >> /etc/security/limits.conf"
@@ -23,3 +24,9 @@
     - gtk2
     - gtk3
     - kernel-devel
+
+- name: Do some general optimizations
+  shell: "{{ item }}"
+  with_items:
+    - echo 'fs.file-max=6544018' >> /etc/sysctl.conf
+    - echo 'net.core.somaxconn=512' >> /etc/sysctl.conf

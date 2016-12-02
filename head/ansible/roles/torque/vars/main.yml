@@ -1,11 +1,16 @@
 ---
+
+torque_url: "http://wpfilebase.s3.amazonaws.com/torque/torque-6.1.0.tar.gz"
+
 torque_nodelist:
   node01.cluster:
     cpus: 4
   node02.cluster:
     cpus: 4
-    
-torque_compile_dir: /tmp/torque
+
+torque_ver: "6.1.0"
+torque_compile_dir: /tmp/torque-{{ torque_ver }}
+
 torque_client_packages:
   - torque-package-mom-linux-x86_64.sh
   - torque-package-clients-linux-x86_64.sh
