@@ -45,7 +45,6 @@
     - pbs_sched.service
 
 - name: Add configs for server_name and lib path
-  shell: "{{ item }}"
   lineinfile: dest=/var/spool/torque/server_name line="{{ head_fqdn }}" create=yes
 
 - name: Run ldconfig on host
