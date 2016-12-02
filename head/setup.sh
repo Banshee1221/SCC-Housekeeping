@@ -19,8 +19,7 @@ then
   echo "Starting...."
   sleep 3
 else
-  printf "Please go through the apps directory and ensure that all the variables"
-  printf " have been correctly set for this machines setup.\n"
+  printf "\nPlease make sure all your variables are correct. PLEASE\n"
   touch deleteme
   exit
 fi
@@ -48,15 +47,24 @@ printf "==========\n=\n=\n=\n=\n= Make sure that you have run the network setup"
 printf " scripts on the compute nodes at this point.\n= !!!!!!MAKE SURE THEY'VE"
 printf " REBOOTED!!!!!!\n=\n=\n=\n=\n==========\n"
 
+response=0
+
+prompt () {
 read -r -p "Have you done this [y/N] " response
 case $response in
-    [yY][eE][sS]|[yY])
-        printf "Continuing.\n\n"
-        ;;
-    *)
-        exit
-        ;;
+  [yY][eE][sS]|[yY])
+  printf "Continuing.\n\n"
+  ;;
+  [nN][oO]|[nN])
+  exit 0
+  ;;
+  *)
+  prompt
+  ;;
 esac
+}
+
+prompt
 
 ################################################################################
 

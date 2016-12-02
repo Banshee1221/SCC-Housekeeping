@@ -30,4 +30,4 @@
 - name: Set new env variables
   shell: "{{ item }}"
   with_items:
-    - echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/scratch/deps/lib" >> /etc/profile
+    - echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/scratch/deps/lib:/scratch/deps/intel/lib" >> /etc/profile
