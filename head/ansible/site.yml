@@ -5,4 +5,3 @@
     - network_bootstrap
     - chrony
     - nfs_setup
-    - housekeeping
