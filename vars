@@ -23,7 +23,7 @@ export INTERNAL_NIC="eno33557248"
 export STATIC_IP_HEAD="10.0.0.10"
 
 # Headnode cores (for building)
-export CORES=2
+export CORES=4
 
 # Name of the shared/common user account (non-root)
 export CLUSTER_USER="cluster"
@@ -41,4 +41,4 @@ export COMP_INTERNAL_NIC=eno33557248
 
 export STATIC_IP_COMP=10.0.0.11
 
-export COMP_CORES=4
+export COMP_CORES=20
